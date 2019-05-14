@@ -7,7 +7,7 @@ import vo.Account;
 import static db.SqliteDB.getConnection;
 public class AccountDao {
 
-	public int doAdd(Account account) {
+	public static int doAdd(Account account) {
 		String sql = "insert into account values(?,?,?)";
 		try(Connection conn = getConnection();
 				PreparedStatement statement = conn.prepareStatement(sql)){
@@ -27,7 +27,6 @@ public class AccountDao {
 		test.setUsername("spencer");
 		test.setPassword("123456");
 		test.setEmail("123@abc.com");
-		AccountDao accountDao = new AccountDao();
-		accountDao.doAdd(test);
+		doAdd(test);
 	}
 }
