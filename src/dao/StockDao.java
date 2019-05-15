@@ -11,7 +11,7 @@ import vo.StockInfo;
 
 public class StockDao {
 
-	public static int doAdd(StockInfo stockInfo) {
+	public int doAdd(StockInfo stockInfo) {
 		String sql = "insert into stock values(?,?,?,?,?)";
 		try(Connection conn = getConnection();
 				PreparedStatement statement = conn.prepareStatement(sql)){
@@ -27,7 +27,7 @@ public class StockDao {
 		return 0;
 	}
 	
-	public static StockInfo findByCode(int code) {
+	public StockInfo findByCode(int code) {
 		String sql = "select * from stock where code = ?";
 		try(Connection conn = getConnection();
 				PreparedStatement statement = conn.prepareStatement(sql)){
@@ -49,7 +49,6 @@ public class StockDao {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(findByCode(2231));
 	}
 	
 }

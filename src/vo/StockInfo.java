@@ -2,6 +2,8 @@ package vo;
 
 import java.io.Serializable;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class StockInfo implements Serializable{
 
 	/**
@@ -57,6 +59,16 @@ public class StockInfo implements Serializable{
 	@Override
 	public String toString() {
 		return getName();
+	}
+	
+	public String toJson() {
+		JSONObject stockJson = new JSONObject();
+		stockJson.put("code", getCode());
+		stockJson.put("name", getName());
+		stockJson.put("price", getPrice());
+		stockJson.put("changePercent", getChangePercent());
+		stockJson.put("changeSize", getChangeSize());
+		return stockJson.toJSONString();
 	}
 	
 

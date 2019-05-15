@@ -11,7 +11,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
-import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -44,6 +43,7 @@ public class StockSpider {
 		Document document = Jsoup.parse(htmlString);
 		Element table = document.getElementById("datalist");
 		Elements stocksElements = table.getElementsByTag("tr");
+		StockDao stockDao = new StockDao();
 		for (Element stockElement : stocksElements) {
 			List<Element> details = stockElement.getElementsByTag("td").subList(0, 5);
 			StockInfo stockInfo = new StockInfo();
@@ -52,8 +52,8 @@ public class StockSpider {
 			stockInfo.setPrice(Double.valueOf(details.get(2).text()));
 			stockInfo.setChangePercent(Double.valueOf(details.get(3).text().split("%")[0]));
 			stockInfo.setChangeSize(Double.valueOf(details.get(4).text()));
-			if (StockDao.findByCode(stockInfo.getCode()).equals(null)) {
-				StockDao.doAdd(stockInfo);
+			if (stockDao.findByCode(stockInfo.getCode()).equals(null)) {
+				stockDao.doAdd(stockInfo);
 			}
 		}
 	}
